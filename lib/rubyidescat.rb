@@ -2,6 +2,6 @@ require "rubyidescat/version"
 require 'rubyidescat/client'
 
 module Rubyidescat
-	require "httparty"
+  require "httparty"
   # Your code goes here...
 end
