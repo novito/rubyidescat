@@ -12,7 +12,7 @@ module Rubyidescat
       end
     end
 
-    def poblacio version, format, operation, params = {} 
+    def poblacio(version, format, operation, params = {})
       @format = format
       @version = version
       @operation = operation
