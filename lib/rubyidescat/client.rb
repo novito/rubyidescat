@@ -18,7 +18,7 @@ module Rubyidescat
       @operation = operation
       @params = params
       @request_url = BASE_URL + 'pob/' + @version + '/' + @operation + '.' + @format
-      @request_url += '?' + build_additional_args(@params) unless @params.empty?
+      @request_url += '?p=' + @params.map{|k,v|"#{k}/#{[v].flatten.join(",")}"}.join(";") unless @params.empty?
       make_call
     end
 
@@ -27,20 +27,6 @@ module Rubyidescat
     def make_call
       response = HTTParty.get self.request_url
       return JSON.parse response.body
-    end
-
-    def build_additional_args params
-      url_params = 'p='
-      params.each do |key, value|
-        url_params += key
-        url_params += '/'
-        if value.kind_of? Array
-          url_params += value.join(",") 
-        else
-          url_params += value
-        end
-      end
-      return url_params
     end
 
   end
