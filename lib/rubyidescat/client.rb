@@ -26,7 +26,7 @@ module Rubyidescat
 
     def make_call
       response = HTTParty.get self.request_url
-      return JSON.parse response.body
+      JSON.parse response.body
     end
 
   end

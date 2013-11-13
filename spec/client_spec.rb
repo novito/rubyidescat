@@ -68,7 +68,7 @@ describe Rubyidescat::Client do
 
     describe 'cerca' do
       it 'should set operation correctly' do
-        VCR.use_cassette('empty sug') do
+        VCR.use_cassette('empty cerca') do
           client.poblacio('v1','json','cerca')
           expect(client.instance_variable_get('@operation')).to eq('cerca')
         end
@@ -76,10 +76,18 @@ describe Rubyidescat::Client do
 
       it 'should set request url correctly' do
         VCR.use_cassette('torrelles cerca') do
-          results = client.poblacio('v1','json','cerca', { 'q' => 'torrelles' })
-          expect(client.request_url).to eq('http://api.idescat.cat/pob/v1/cerca.json?p=q/torrelles')
+          results = client.poblacio('v1','json','cerca', { 'q' => 'torrelles de llobregat' })
+          expect(client.request_url).to eq('http://api.idescat.cat/pob/v1/cerca.json?p=q/torrelles%20de%20llobregat')
         end
       end
+
+      it 'should accept one parameter and return results' do
+        VCR.use_cassette('torrelles cerca') do
+          results = client.poblacio('v1','json','cerca', { 'q' => 'torrelles de llobregat' })
+          expect(results["feed"]["opensearch:totalResults"]).to eq("3")
+        end
+      end
+
     end
 
   end
