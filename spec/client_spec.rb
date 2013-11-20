@@ -6,14 +6,19 @@ describe Rubyidescat::Client do
     it 'creates a new client' do
       expect { Rubyidescat::Client.new }.to_not raise_error
     end
-
-    it 'should have a base url for the API' do
-      #expect { Rubyidescat::Client }.to be_const_defined :BASE_URL
-    end
   end
   
   let(:client) { Rubyidescat::Client.new }
   describe 'poblacio' do
+
+    describe 'geo' do
+      it 'should accept one parameter and return results' do
+        VCR.use_cassette('torrelles geo') do
+          results = client.get_population('geo', { 'q' => 'torrelles' })
+          expect(results["feed"]["opensearch:totalResults"]).to eq("6")
+        end
+      end
+    end
 
     describe 'sug' do
 
@@ -47,6 +52,21 @@ describe Rubyidescat::Client do
           expect(results["feed"]["opensearch:totalResults"]).to eq("3")
         end
       end
+
+      it 'should accept several extra parameters and return results' do
+        VCR.use_cassette('cerca tipus pob "torrelles de llobregat"') do
+          results = client.get_population('cerca', { 'q' => 'torrelles de llobregat', 'tipus' => 'pob' })
+          expect(results["feed"]["opensearch:totalResults"]).to eq("3")
+        end
+      end
+
+      it 'should accept parameter sim' do
+        VCR.use_cassette('cerca sim 0,1 "abrera"') do
+          results = client.get_population('cerca', { 'q' => 'abrera', 'sim' => '0,1' })
+          expect(results["feed"]["opensearch:totalResults"]).to eq("4")
+        end
+      end
+
 
     end
 
