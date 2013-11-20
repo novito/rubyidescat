@@ -67,8 +67,17 @@ describe Rubyidescat::Client do
         end
       end
 
+    end #end cerca
+  end #end poblacio
 
+  describe "rectifications" do
+    describe "cerca" do 
+      it 'should accept zero parameters and return results' do
+        VCR.use_cassette('rectifications cerca') do
+          results = client.get_rectifications('cerca')
+          expect(results["feed"]["opensearch:totalResults"].to_i).to be > 0 
+        end
+      end
     end
-
   end
 end

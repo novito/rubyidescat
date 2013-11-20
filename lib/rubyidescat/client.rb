@@ -26,6 +26,19 @@ module Rubyidescat
       make_call("pob", operation, params)
     end
 
+    #
+    # Gets the rectification information 
+    #
+    # @param  operation [String] Operation to be made. Could be "cerca" or "categories"
+    # @param  params = {} [Hash] Parameters for the API query
+    # see http://www.idescat.cat/dev/api/rectificacions/?lang=en#a1.1.2. for more information
+    #
+    # @return [JSON, String or XML] The API response with the specified format
+    #
+    def get_rectifications(operation, params = {})
+      make_call("rectificacions", operation, params)
+    end
+
     private
 
       #
