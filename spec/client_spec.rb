@@ -78,6 +78,12 @@ describe Rubyidescat::Client do
           expect(results["feed"]["opensearch:totalResults"].to_i).to be > 0 
         end
       end
+      it 'should accept parameters id and return results' do
+        VCR.use_cassette('rectifications cerca with parameter id') do
+          results = client.get_rectifications('cerca', { 'id' => 'abrera' })
+          expect(results["feed"]["opensearch:totalResults"].to_i).to be > 0 
+        end
+      end
     end
   end
 end
